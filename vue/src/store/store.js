@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import firebase from '../lib/fb.js'
+import firebase from '../lib/initialized-firebase.js'
 import note from './modules/note.js';
 
 Vue.use(Vuex);

@@ -1,4 +1,4 @@
-import firebase from '../../lib/fb.js';
+import firebase from '../../lib/initialized-firebase.js';
 import _ from 'lodash';
 import moment from 'moment';
 const db = firebase.database();
