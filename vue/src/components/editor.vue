@@ -68,8 +68,10 @@ export default {
   },
   watch:{
     notes(notes){
-      this.editNote = this.getNote();
-      this.edit = !this.editNote;
+      this.initialize();
+    },
+    '$route.params'(params){
+      this.initialize();
     }
   },
   methods:{
@@ -92,6 +94,10 @@ export default {
       const d = this.$route.params.date;
       const note = this.$store.state.note.notes[d];
       return note ? note.note : "";
+    },
+    initialize(){
+      this.editNote = this.getNote();
+      this.edit = !this.editNote;
     }
   },
   mounted(){
