@@ -1,5 +1,12 @@
 <template>
   <div class="note-list">
+    <div class="edit-latest">
+      <button class="ui basic primary button" @click="editLatest">
+        <i class="edit icon"></i>
+        Edit latest
+      </button>
+    </div>
+
     <div class="note" v-for="d in dates" v-if="notes">
       <h2 class="header" :class="d.class">
         <router-link :class="{empty:!(d.date in notes)}" :to="{name:'edit',params:{date:d.date}}">{{d.label}}</router-link>
@@ -41,6 +48,9 @@
 .empty-container {
   height: 3em;
 }
+.edit-latest{
+  margin-top:1em;
+}
 </style>
 
 <script>
@@ -50,6 +60,21 @@ export default {
   props:['notes','ym'],
   components:{
     markdown
+  },
+  methods:{
+    editLatest(){
+      const notes = _.values(this.notes);
+      const latest = _.maxBy(notes,n => n.date);
+      let next = false;
+      for(const d of this.dates){
+        if(next){
+          this.$router.push({name:'edit',params:{date:d.date}})
+          return;
+        }
+        console.log(d,latest);
+        next = d.date == latest.date;
+      }
+    }
   },
   computed:{
     dates(){
@@ -64,7 +89,6 @@ export default {
         });
         date.add(1,'day');
       }
-      console.log(dates);
       return dates;
     }
   }

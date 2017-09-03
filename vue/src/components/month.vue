@@ -5,8 +5,12 @@
   </div>
 </template>
 
+<style>
+
+</style>
 
 <script>
+import _ from 'lodash';
 import {mapState} from 'vuex';
 import monthSelector from './month-selector.vue';
 import noteList from './note-list.vue';
