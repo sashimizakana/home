@@ -22,6 +22,9 @@
 </template>
 
 <style scoped>
+.note-list {
+  margin-bottom:10em;
+}
 .note .header {
   margin-bottom:0;
   font-size: 15pt;
