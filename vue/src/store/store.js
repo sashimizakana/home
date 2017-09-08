@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import firebase from '../lib/initialized-firebase.js'
 import note from './modules/note.js';
+import doc from './modules/doc.js';
 
 Vue.use(Vuex);
 
@@ -64,7 +65,8 @@ const store = new Vuex.Store({
     }
   },
   modules:{
-    note
+    note,
+    doc
   }
 });
 
