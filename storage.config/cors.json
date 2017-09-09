@@ -1,7 +1,0 @@
-[
-  {
-    "origin": ["http://localhost:8080","https://homework-58843.firebaseapp.com","https://text.denkizakana.com"],
-    "method": ["GET"],
-    "maxAgeSeconds": 3600
-  }
-]
