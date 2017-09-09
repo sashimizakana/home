@@ -3,13 +3,18 @@
     <h1>
       {{document.title}}
       <span class="tools">
-        <router-link :to="{name:'index'}">
-          <i class="up arrow icon"></i>
-          index
-        </router-link>
+        <a :href="tweetLink">
+          <i class="twitter icon"></i>
+        </a>
       </span>
     </h1>
     <markdown :source="document.contents"></markdown>
+    <div class="footer-tools">
+      <router-link :to="{name:'index'}">
+        <i class="up arrow icon"></i>
+        index
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -20,6 +25,10 @@
 .tools {
   font-size: 11pt;
 }
+.footer-tools {
+  margin-top:1em;
+  margin-bottom:1em;
+  }
 </style>
 
 <script>
@@ -37,7 +46,8 @@ export default {
   data(){
     return {
       document:{},
-      loading:false
+      loading:false,
+      tweetLink:""
     }
   },
   methods:{
@@ -46,6 +56,8 @@ export default {
       return axios.get(url).then(d => {
         this.document = d.data;
         window.document.title = this.document.title + " - " + window.document.title;
+        let status = encodeURIComponent(this.document.title + " / " + location.href);
+        this.tweetLink = `http://twitter.com/?status=${status}`;
         return this.document;
       });
     }

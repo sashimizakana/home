@@ -1,6 +1,14 @@
 <template>
-  <div v-html="encoded"></div>
+  <div class="markdown" v-html="encoded"></div>
 </template>
+
+<style>
+.markdown p{
+  font-size: 12pt;
+  line-height: 1.7;
+}
+</style>
+
 <script>
 import MarkdownIt from 'markdown-it';
 import video from 'markdown-it-video';
