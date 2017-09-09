@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy-private": "node deploy-private.js"
+    "deploy-private": "node deploy-private.js",
+    "deploy-public": "firebase deploy",
+    "config-cors": "gsutil.cmd cors set storage.config/cors.json gs://homework-58843.appspot.com"
   },
   "author": "",
   "license": "",
   "devDependencies": {
+    "firebase-tools": "^3.10.1",
     "s3": "^4.4.0"
   }
 }
