@@ -2,11 +2,28 @@
 
 現状単なるメモ書くためのシステム。
 
+## 構成
+
+### /private
+
+実際に記事書いたりする管理画面。
+非公開のドメインとか、ローカルとかに置いとくと良い。
+よしんば公開上においても、firebaseの設定ちゃんとしておけば問題ない。
+vueでフロントエンド書いて、そのままfirebase databaseにメモ等を保存する。
+publishすると公開設定にしてあるfirebase storageに目次とファイルを作成する。
+
+### /public
+
+文章を公開する場所。
+firebase hostingで公開していて、firebase storageから目次と記事のjsonを読む。
+単純な作りなのでvuexとか使ってない。↓が実際に公開してるやつ。
+https://text.denkizakana.com
+
 ## 設定情報
 
 リポジトリに入れない設定ファイル。こんな感じで作るメモ。
 
-### /aws.config.js
+### /aws-config.js
 
 deployするときに使うAWSの設定情報入れる。
 絶対リポジトリに入れない。
@@ -22,7 +39,7 @@ module.exports = {
 };
 ```
 
-### /private/vue/src/lib/firebase.config.js
+### /private/vue/src/lib/firebase-config.js
 
 firebaseのアクセス情報。コレ自体は基本的に公開情報になってても良いはず。
 （アクセス制限そのものはfirebaseのコンソールからGoogleのアカウントIDで設定してあるから）
@@ -39,3 +56,18 @@ export default {
 ```
 
 ↑のjsonはfirebaseのコンソールからWebで利用するみたいなリンク先からコピペできる。
+
+### /cors-config.json
+
+Google storageのcors設定用json
+gsutilのコマンドから使う(npm run scriptのnpm run config-corsで実行するようにしてある)
+
+```json
+[
+  {
+    "origin": ["http://localhost:8080"],
+    "method": ["GET"],
+    "maxAgeSeconds": 3600
+  }
+]
+```
