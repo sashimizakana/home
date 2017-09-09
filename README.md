@@ -6,17 +6,17 @@
 
 ### /private
 
-実際に記事書いたりする管理画面。
-非公開のドメインとか、ローカルとかに置いとくと良い。
-よしんば公開上においても、firebaseの設定ちゃんとしておけば問題ない。
-vueでフロントエンド書いて、そのままfirebase databaseにメモ等を保存する。
-publishすると公開設定にしてあるfirebase storageに目次とファイルを作成する。
+実際に記事書いたりする管理画面。  
+非公開のドメインとか、ローカルとかに置いとくと良い。  
+よしんば公開上においても、firebaseの設定ちゃんとしておけば問題ない。  
+vueでフロントエンド書いて、そのままfirebase databaseにメモ等を保存する。  
+publishすると公開設定にしてあるfirebase storageに目次とファイルを作成する。  
 
 ### /public
 
-文章を公開する場所。
-firebase hostingで公開していて、firebase storageから目次と記事のjsonを読む。
-単純な作りなのでvuexとか使ってない。↓が実際に公開してるやつ。
+文章を公開する場所。  
+firebase hostingで公開していて、firebase storageから目次と記事のjsonを読む。  
+単純な作りなのでvuexとか使ってない。↓が実際に公開してるやつ。  
 https://text.denkizakana.com
 
 ## npm run scripts
@@ -31,8 +31,8 @@ S3上の管理ページを上書きするやつ
 
 ### npm run config-cors
 
-Google storageのCORSの設定をするコマンド
-gsutilインストール必須。gcloud initも必要。
+Google storageのCORSの設定をするコマンド  
+gsutilインストール必須。gcloud initも必要。  
 ```sh
 npm run config-cors <gs://みたいなストレージのアドレス>
 ```
@@ -44,7 +44,7 @@ npm run config-cors <gs://みたいなストレージのアドレス>
 
 ### /aws-config.js
 
-deployするときに使うAWSの設定情報入れる。
+deployするときに使うAWSの設定情報入れる。  
 絶対リポジトリに入れない。
 
 ```js
@@ -60,7 +60,7 @@ module.exports = {
 
 ### /private/vue/src/lib/firebase-config.js
 
-firebaseのアクセス情報。コレ自体は基本的に公開情報になってても良いはず。
+firebaseのアクセス情報。コレ自体は基本的に公開情報になってても良いはず。  
 （アクセス制限そのものはfirebaseのコンソールからGoogleのアカウントIDで設定してあるから）
 
 ```js
@@ -78,8 +78,9 @@ export default {
 
 ### /cors-config.json
 
-Google storageのcors設定用json
-gsutilのコマンドから使う(npm run scriptのnpm run config-corsで実行するようにしてある)
+Google storageのcors設定用json  
+gsutilのコマンドから使う  
+(npm run scriptのnpm run config-corsで実行するようにしてある)
 
 ```json
 [
