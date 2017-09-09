@@ -46,7 +46,7 @@ export default {
     }
   },
   filters:{
-    date:(d) => moment(d).format('YYYY-MM-DD(ddd)')
+    date:(d) => moment(d).format('YYYY-MM-DD(ddd) HH:mm')
   }
 }
 </script>
