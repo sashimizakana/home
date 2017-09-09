@@ -26,6 +26,7 @@
 import moment from 'moment';
 import axios from 'axios';
 import Markdown from './markdown.vue';
+import config from '../config/storage-config.js';
 export default {
   mounted(){
     this.loading = true;
@@ -41,7 +42,7 @@ export default {
   },
   methods:{
     load(key){
-      const url = `https://firebasestorage.googleapis.com/v0/b/homework-58843.appspot.com/o/blog%2F${key}?alt=media`;
+      const url = `${config.domain}/o/blog%2F${key}?alt=media`;
       return axios.get(url).then(d => {
         this.document = d.data;
         window.document.title = this.document.title + " - " + window.document.title;

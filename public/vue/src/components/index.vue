@@ -21,6 +21,7 @@
 <script>
 import moment from 'moment';
 import axios from 'axios';
+import config from '../config/storage-config.js';
 export default {
   mounted(){
     window.document.title = "目次 - ばかおもちゃ文章"
@@ -37,7 +38,7 @@ export default {
   },
   methods:{
     loadIndex(){
-      const url = 'https://firebasestorage.googleapis.com/v0/b/homework-58843.appspot.com/o/blog%2Findex.json?alt=media';
+      const url = `${config.domain}/o/blog%2Findex.json?alt=media`;
       return axios.get(url).then(d => {
         this.index = d.data;
         return this.index;
