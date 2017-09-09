@@ -6,7 +6,7 @@
   "scripts": {
     "deploy-private": "node deploy-private.js",
     "deploy-public": "firebase deploy",
-    "config-cors": "gsutil.cmd cors set cors-config.json gs://homework-58843.appspot.com"
+    "config-cors": "gsutil.cmd cors set cors-config.json"
   },
   "author": "",
   "license": "",

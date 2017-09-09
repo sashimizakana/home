@@ -19,6 +19,25 @@ firebase hostingで公開していて、firebase storageから目次と記事の
 単純な作りなのでvuexとか使ってない。↓が実際に公開してるやつ。
 https://text.denkizakana.com
 
+## npm run scripts
+
+### npm run deploy-private
+
+S3上の管理ページを上書きするやつ
+
+### npm run deploy-public
+
+公開用ページを上書きするやつ
+
+### npm run config-cors
+
+Google storageのCORSの設定をするコマンド
+gsutilインストール必須。gcloud initも必要。
+```sh
+npm run config-cors <gs://みたいなストレージのアドレス>
+```
+で実行する。
+
 ## 設定情報
 
 リポジトリに入れない設定ファイル。こんな感じで作るメモ。
