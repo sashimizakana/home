@@ -2,6 +2,7 @@ import firebase from '../../lib/initialized-firebase.js';
 import _ from 'lodash';
 import moment from 'moment';
 const db = firebase.database();
+const storageRef = firebase.storage().ref();
 const documents = db.ref('documents');
 const documentIndex = db.ref('documentIndex');
 
@@ -27,13 +28,19 @@ export default {
   },
   actions:{
     load({commit},key){
-      return documents.child(key).once('value',(snapshots) => {
-        return commit('load',snapshots.val());
-      });
+      return new Promise(resolve => {
+        documents.child(key).once('value',(snapshots) => {
+          commit('load',snapshots.val());
+          resolve(snapshots.val());
+        });
+      })
     },
     loadIndex({commit}){
-      documentIndex.once('value',(snapshots) => {
-        commit('loadIndex',snapshots.val());
+      return new Promise(resolve => {
+        documentIndex.once('value',(snapshots) => {
+          commit('loadIndex',snapshots.val());
+          resolve(snapshots.val());
+        });
       });
     },
     save({commit,dispatch},data){
@@ -50,6 +57,17 @@ export default {
       information.modifiedAt = firebase.database.ServerValue.TIMESTAMP;
       return documentIndex.child(information.key).set(information).then(() => {
         dispatch('loadIndex');
+      });
+    },
+    publish({dispatch,state},key){
+      const file = storageRef.child(`blog/${key}`);
+      let contents = JSON.stringify(state.document);
+      const type = firebase.storage.StringFormat.RAW;
+      const options = {contentType:'application/json'};
+      return file.putString(contents,type,options).then(()=>{
+        const index = storageRef.child("blog/index.json");
+        contents = JSON.stringify(state.index);
+        return index.putString(contents,type,options);
       });
     }
   }

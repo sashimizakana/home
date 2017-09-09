@@ -4,9 +4,21 @@
       <h1 class="huge">
         <span v-if="$route.params.id != 'new'">{{document.title}}</span>
         <span v-else>(あたらしい文書)</span>
-        <router-link :to="{name:'document-index'}">
-          <i class="up arrow icon"></i>
-        </router-link>
+        <span class="button-tools">
+          <router-link :to="{name:'document-index'}">
+            <i class="up arrow icon"></i>
+            index
+          </router-link>
+          &nbsp;&nbsp;
+          <a href="javascript:void(0)" @click="publish" v-if="!uploading && $route.params.id != 'new'">
+            <i class="upload icon"></i>
+            publish
+          </a>
+          <span v-if="uploading">
+            <i class="upload icon"></i>
+            uploading...
+          </span>
+        </span>
       </h1>
     </div>
 
@@ -65,6 +77,9 @@
 textarea.contents {
   line-height: 1.7em;
 }
+.button-tools {
+  font-size:11pt;
+}
 </style>
 
 <script>
@@ -78,7 +93,8 @@ export default {
       dateLabel:null,
       editContents:"",
       editTitle:"",
-      loading:false
+      loading:false,
+      uploading:false
     }
   },
   watch:{
@@ -114,6 +130,12 @@ export default {
       this.editContents = this.document.contents;
       this.editTitle = this.document.title;
       this.edit = this.$route.params.id == "new";
+    },
+    publish(){
+      this.uploading = true;
+      this.$store.dispatch('doc/publish',this.$route.params.id).then(()=>{
+        this.uploading = false;
+      });
     }
   },
   mounted(){
@@ -124,7 +146,10 @@ export default {
     }else{
       this.loading = true;
       this.edit = false;
-      this.$store.dispatch('doc/load',this.$route.params.id).then(()=>{
+      const promise = [];
+      promise.push(this.$store.dispatch('doc/load',this.$route.params.id));
+      promise.push(this.$store.dispatch('doc/loadIndex',this.$route.params.id));
+      Promise.all(promise).then(()=>{
         this.loading = false;
       });
     }
