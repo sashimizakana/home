@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy": "node main.js"
+    "deploy-private": "node deploy-private.js"
   },
   "author": "",
   "license": "",

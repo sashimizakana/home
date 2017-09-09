@@ -1,6 +1,6 @@
 const s3 = require('s3');
 const path = require('path');
-const config = require('./aws.config.js');
+const config = require('./aws-config.js');
 const client = s3.createClient({
   s3Options: config.api
 });
