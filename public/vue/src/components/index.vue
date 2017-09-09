@@ -1,5 +1,5 @@
 <template>
-  <div id="index" v-if="!loading">
+  <div id="index">
     <h1>ばかおもちゃ文章</h1>
     <div class="ui list" v-for="i in index">
       <div class="item">
@@ -22,28 +22,27 @@
 import moment from 'moment';
 import axios from 'axios';
 import config from '../config/storage-config.js';
+
+function loadIndex(){
+  const url = `${config.domain}/o/blog%2Findex.json?alt=media`;
+  return axios.get(url).then(d => d.data);
+}
+
 export default {
   mounted(){
     window.document.title = "目次 - ばかおもちゃ文章"
-    this.loading = true;
-    this.loadIndex().then(()=>{
-      this.loading = false;
-    });
   },
   data(){
     return {
-      index:[],
-      loading:false
+      index:[]
     }
   },
-  methods:{
-    loadIndex(){
-      const url = `${config.domain}/o/blog%2Findex.json?alt=media`;
-      return axios.get(url).then(d => {
-        this.index = d.data;
-        return this.index;
+  beforeRouteEnter(route, redirect, next){
+    loadIndex().then(index => {
+      next(vm => {
+        vm.index = index;
       });
-    }
+    });
   },
   filters:{
     date:(d) => moment(d).format('YYYY-MM-DD(ddd) HH:mm')
