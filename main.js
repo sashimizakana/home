@@ -5,7 +5,7 @@ const client = s3.createClient({
   s3Options: config.api
 });
 const params = {
-  localDir: path.resolve(__dirname,"public"),
+  localDir: path.resolve(__dirname,"private","static"),
   deleteRemoved: true,
   s3Params: {
     Bucket: config.bucketName,

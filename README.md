@@ -22,7 +22,7 @@ module.exports = {
 };
 ```
 
-### /vue/src/lib/firebase.config.js
+### /private/vue/src/lib/firebase.config.js
 
 firebaseのアクセス情報。コレ自体は基本的に公開情報になってても良いはず。
 （アクセス制限そのものはfirebaseのコンソールからGoogleのアカウントIDで設定してあるから）
