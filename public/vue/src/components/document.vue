@@ -62,6 +62,11 @@ export default {
       window.document.title = this.document.title + " - " + window.document.title;
       let status = encodeURIComponent(this.document.title + " / " + location.href);
       this.tweetLink = `http://twitter.com/?status=${status}`;
+      this.$ga.page({
+        page: '/document/' + this.$route.params.id,
+        title: "文章:" + this.document.title,
+        location: window.location.href
+      });
       return this.document;
     }
   },

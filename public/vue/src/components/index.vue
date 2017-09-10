@@ -31,6 +31,11 @@ function loadIndex(){
 export default {
   mounted(){
     window.document.title = "目次 - ばかおもちゃ文章"
+    this.$ga.page({
+      page: '/index',
+      title: "目次",
+      location: window.location.href
+    });
   },
   data(){
     return {
