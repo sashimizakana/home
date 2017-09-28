@@ -10,10 +10,17 @@
             index
           </router-link>
           &nbsp;&nbsp;
-          <a href="javascript:void(0)" @click="publish" v-if="!uploading && $route.params.id != 'new'">
-            <i class="upload icon"></i>
-            publish
-          </a>
+          <span v-if="!uploading && $route.params.id != 'new'">
+            <a href="javascript:void(0)" @click="publish">
+              <i class="upload icon"></i>
+              publish
+            </a>
+            &nbsp;
+            <a href="javascript:void(0)" @click="unpublish" v-if="document.published">
+              <i class="download icon"></i>
+              unpublish
+            </a>
+          </span>
           <span v-if="uploading">
             <i class="upload icon"></i>
             uploading...
@@ -112,12 +119,13 @@ export default {
         this.initialize();
       }
     },
-    save(title,contents){
+    save(title,contents,published){
       const key = this.$route.params.id == 'new' ? null : this.$route.params.id;
       this.$store.dispatch('doc/save',{
         title,
         contents,
-        key
+        key,
+        published:!!published
       }).then((newKey) => {
         this.editContents = this.document.contents;
         this.edit = false;
@@ -134,6 +142,12 @@ export default {
     publish(){
       this.uploading = true;
       this.$store.dispatch('doc/publish',this.$route.params.id).then(()=>{
+        this.uploading = false;
+      });
+    },
+    unpublish(){
+      this.uploading = true;
+      this.$store.dispatch('doc/unpublish',this.$route.params.id).then(()=>{
         this.uploading = false;
       });
     }
