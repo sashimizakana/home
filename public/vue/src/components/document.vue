@@ -1,6 +1,6 @@
 <template>
   <div id="document" v-if="document">
-    <h1>
+    <h1 class="title">
       {{document.title}}
       <span class="tools">
         <a :href="tweetLink">
@@ -8,6 +8,7 @@
         </a>
       </span>
     </h1>
+    <div class="modified-at">最終更新：{{document.modifiedAt|date}}</div>
     <markdown :source="document.contents"></markdown>
     <div class="footer-tools">
       <router-link :to="{name:'index'}">
@@ -26,9 +27,17 @@
   font-size: 11pt;
 }
 .footer-tools {
-  margin-top:1em;
-  margin-bottom:1em;
-  }
+  margin-top:3em;
+  margin-bottom:2em;
+}
+.modified-at {
+  opacity: 0.5;
+  margin-bottom:2em;
+}
+.title {
+  font-size:25pt;
+  margin-bottom:0;
+}
 </style>
 
 <script>
@@ -69,6 +78,9 @@ export default {
       });
       return this.document;
     }
+  },
+  filters:{
+    date:d => moment(d).format('YYYY年MM月DD日(ddd) HH:mm:ss')
   },
   components:{
     Markdown

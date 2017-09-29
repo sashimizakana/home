@@ -22,7 +22,6 @@
 import moment from 'moment';
 import axios from 'axios';
 import config from '../config/storage-config.js';
-
 function loadIndex(){
   const url = `${config.domain}/o/blog%2Findex.json?alt=media`;
   return axios.get(url).then(d => d.data);

@@ -1,5 +1,9 @@
 {
   "hosting": {
-    "public": "public/static"
+    "public": "public/static",
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html"
+    } ]
   }
 }

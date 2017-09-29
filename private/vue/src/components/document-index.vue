@@ -38,7 +38,7 @@ export default {
     index:'index'
   }),
   methods:{
-    date:(d)=>moment(d).format('YYYY-MM-DD(ddd) hh:mm')
+    date:(d)=>moment(d).format('YYYY-MM-DD(ddd) HH:mm')
   }
 }
 </script>

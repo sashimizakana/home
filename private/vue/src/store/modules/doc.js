@@ -19,12 +19,12 @@ export default {
     cursor(state,ym){
       state.ym = ym;
     },
-    save(state,document){
-      state.document = document;
-    },
     loadIndex(state,index){
       state.index = _.map(index,i => i);
       state.index = _.orderBy(state.index,i => i.modifiedAt).reverse();
+    },
+    clear(state){
+      state.document = {title:"",contents:"",isNew:true,published:false};
     }
   },
   actions:{
@@ -45,19 +45,20 @@ export default {
       });
     },
     save({commit,dispatch},data){
-      const params = {title:data.title,contents:data.contents,published:data.published};
+      const params = {title:data.title,contents:data.contents,published:data.published,modifiedAt:firebase.database.ServerValue.TIMESTAMP};
       const promise = data.key ? documents.child(data.key).set(params) : documents.push(params);
       let key;
-      return promise.then((snapshot)=>{
-        key = data.key || snapshot.key;
-        commit('save',params);
-        return dispatch('saveIndex',{key,title:data.title,published:data.published})
+      return promise.then(snapshot=>{
+        key = snapshot ? snapshot.key : data.key;
+        return snapshot || dispatch('load',data.key);
+      }).then(snapshot => {
+        commit('load',snapshot);
+        return dispatch('saveIndex',{key,title:snapshot.title,published:snapshot.published,modifiedAt:snapshot.modifiedAt})
       }).then(()=>{
         return key;
       });
     },
     saveIndex({dispatch},information){
-      information.modifiedAt = firebase.database.ServerValue.TIMESTAMP;
       return documentIndex.child(information.key).set(information).then(() => {
         return dispatch('loadIndex');
       });
@@ -90,9 +91,11 @@ export default {
       return file.putString(contents,type,options).then(()=>{
         const index = storageRef.child("blog/index.json");
         contents = JSON.stringify(_.filter(state.index,'published'));
-        console.log(_.filter(state.index,'published'));
         return index.putString(contents,type,options);
       });
+    },
+    clear({commit}){
+      commit('clear');
     }
   }
 };

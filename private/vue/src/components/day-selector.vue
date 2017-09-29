@@ -50,7 +50,7 @@ export default {
   methods:{
     setDates(){
       const cursor = moment(this.date);
-      this.dateLabel = cursor.format('YYYY年MM月DD日');
+      this.dateLabel = cursor.format('YYYY年MM月DD日(ddd)');
       this.ym = cursor.format('YYYY-MM');
       this.prevDate = moment(cursor).subtract(1,'day').format('YYYY-MM-DD');
       this.nextDate = moment(cursor).add(1,'day').format('YYYY-MM-DD');

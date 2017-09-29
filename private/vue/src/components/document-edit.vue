@@ -29,6 +29,10 @@
       </h1>
     </div>
 
+    <div class="modified-at" v-if="document.modifiedAt">
+      最終更新:{{document.modifiedAt|date}}
+    </div>
+
     <div class="editor-main">
       <div class="edit-tools" v-if="!edit">
         <a @click="toggleEdit()" href="javascript:void(0)">
@@ -47,7 +51,7 @@
         </div>
       </div>
 
-      <div v-if="!edit">
+      <div v-if="!edit" class="markdown-container">
         <markdown :source="document.contents"></markdown>
       </div>
     </div>
@@ -79,13 +83,20 @@
 }
 .huge {
   font-size:25pt;
-  margin-bottom:12px;
+  margin-bottom:0;
 }
 textarea.contents {
   line-height: 1.7em;
 }
 .button-tools {
   font-size:11pt;
+}
+.markdown-container {
+  margin-bottom:5em;
+}
+.modified-at {
+  opacity: 0.5;
+  margin-bottom:2em;
 }
 </style>
 
@@ -157,6 +168,7 @@ export default {
       this.edit = true;
       this.editContents = "";
       this.editTitle = "";
+      this.$store.dispatch('doc/clear');
     }else{
       this.loading = true;
       this.edit = false;
@@ -166,6 +178,11 @@ export default {
       Promise.all(promise).then(()=>{
         this.loading = false;
       });
+    }
+  },
+  filters:{
+    date:(d) => {
+      return moment(d).format('YYYY年MM月DD日(ddd) HH:mm:ss')
     }
   },
   computed:mapState('doc',{
