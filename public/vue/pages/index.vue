@@ -4,7 +4,7 @@
     <div class="ui list" v-for="i in index">
       <div class="item">
         <div class="header">
-          <router-link :to="{name:'document',params:{id:i.key}}">{{i.title}}</router-link>
+          <a :href="'/' + i.key" target="_self">{{i.title}}</a>
         </div>
         <div class="content">{{i.modifiedAt|date}}</div>
       </div>
@@ -22,30 +22,19 @@
 import moment from 'moment';
 import axios from 'axios';
 import config from '../config/storage-config.js';
-function loadIndex(){
-  const url = `${config.domain}/o/blog%2Findex.json?alt=media`;
-  return axios.get(url).then(d => d.data);
-}
 
 export default {
-  mounted(){
-    window.document.title = "目次 - ばかおもちゃ文章"
-    this.$ga.page({
-      page: '/index',
-      title: "目次",
-      location: window.location.href
-    });
-  },
-  data(){
+  head(){
     return {
-      index:[]
+      title:"目次 - ばかおもちゃ文章"
     }
   },
-  beforeRouteEnter(route, redirect, next){
-    loadIndex().then(index => {
-      next(vm => {
-        vm.index = index;
-      });
+  asyncData(){
+    const url = `${config.domain}/o/blog%2Findex.json?alt=media`;
+    return axios.get(url).then(d => {
+      return {
+        index:d.data
+      }
     });
   },
   filters:{
