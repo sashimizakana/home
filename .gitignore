@@ -16,3 +16,4 @@ dist.js
 build
 .firebaserc
 cors-config.json
+.nuxt
