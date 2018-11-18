@@ -13,5 +13,6 @@
   "devDependencies": {
     "firebase-tools": "^3.10.1",
     "s3": "^4.4.0"
-  }
+  },
+  "dependencies": {}
 }
